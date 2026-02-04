@@ -77,6 +77,7 @@ Set the `ZAPIER_WEBHOOK_URL` environment variable for the lead capture function.
 - **Service Content:** `src/content/services/`
 - **Case Studies:** `src/content/case-studies/`
 - **Blog Posts:** `src/content/blog/`
+- **Locations:** `src/content/locations/`
 - **Brand Colors:** `tailwind.config.mjs`
 
 ## 📄 License

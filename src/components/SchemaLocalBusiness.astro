@@ -1,0 +1,19 @@
+---
+import site from "../content/settings/site.json";
+const { city } = Astro.props;
+const data = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: site.brand_name,
+  areaServed: city,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: city,
+    addressRegion: ""
+  },
+  telephone: site.phone,
+  email: site.email,
+  url: "https://contentia-creative.netlify.app"
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(data)}></script>

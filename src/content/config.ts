@@ -31,6 +31,21 @@ const caseStudies = defineCollection({
   })
 });
 
+const locations = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    city: z.string(),
+    summary: z.string(),
+    hero: z.string(),
+    services: z.array(z.string()),
+    faqs: z.array(z.object({
+      question: z.string(),
+      answer: z.string()
+    }))
+  })
+});
+
 const blog = defineCollection({
   type: "content",
   schema: z.object({
@@ -40,4 +55,4 @@ const blog = defineCollection({
   })
 });
 
-export const collections = { services, caseStudies, blog };
+export const collections = { services, caseStudies, locations, blog };
