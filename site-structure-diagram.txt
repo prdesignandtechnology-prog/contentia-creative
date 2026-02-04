@@ -1,0 +1,227 @@
+WEBSITE STRUCTURE VISUALIZATION
+================================
+
+Homepage (/)
+├─ Hero Section
+│  ├─ Headline
+│  ├─ Subheadline
+│  ├─ Primary CTA (Calendly)
+│  └─ Hero Image
+├─ Value Proposition
+├─ Services Overview (3 cards → /services/[slug])
+├─ Social Proof Stats
+├─ Testimonials
+├─ Case Study Highlights (→ /case-studies)
+└─ Final CTA
+
+Services Hub (/services)
+├─ Page Header
+├─ Service Cards Grid
+│  ├─ Service 1 → /services/ai-content-ops
+│  ├─ Service 2 → /services/local-seo-geo-aeo
+│  └─ Service 3 → /services/ai-integrations
+└─ CTA
+
+Service Detail Page (/services/[slug])
+├─ Service Hero
+├─ Primary Outcome Statement
+├─ Deliverables Section
+├─ Process/Methodology
+├─ FAQ Accordion
+├─ Schema: Service + FAQPage
+├─ Related Case Studies
+└─ Conversion CTA
+
+Case Studies Hub (/case-studies)
+├─ Page Header
+├─ Case Study Cards Grid
+│  ├─ Case 1 → /case-studies/[slug]
+│  ├─ Case 2 → /case-studies/[slug]
+│  └─ Case 3 → /case-studies/[slug]
+└─ CTA
+
+Case Study Detail (/case-studies/[slug])
+├─ Client Overview
+├─ Problem Section
+├─ Solution Section
+├─ Results (Metrics)
+├─ Tools Used
+├─ Testimonial (optional)
+└─ CTA
+
+Blog Hub (/blog) [Optional]
+├─ Page Header
+├─ Article Grid
+│  └─ Articles → /blog/[slug]
+└─ Pagination/Load More
+
+Blog Post (/blog/[slug])
+├─ Article Header (title, date, author)
+├─ Article Body (Markdown)
+├─ Related Posts
+└─ CTA
+
+Location Pages (/locations/[city]) [If Local SEO]
+├─ City-Specific Hero
+├─ Service Area Description
+├─ Services Available
+├─ Local Proof Points
+├─ FAQ
+├─ Schema: LocalBusiness
+└─ CTA
+
+About Page (/about)
+├─ Company Story
+├─ Mission Statement
+├─ Team Grid (optional)
+├─ Credentials/Partnerships
+└─ CTA
+
+Contact Page (/contact)
+├─ Page Header
+├─ Contact Form
+│  ├─ Name (required)
+│  ├─ Email (required)
+│  ├─ Phone (optional)
+│  ├─ Company (optional)
+│  ├─ Message (required)
+│  └─ Honeypot (hidden)
+├─ Calendly Embed Section
+└─ Alternative Contact Info
+   ├─ Email
+   ├─ Phone
+   └─ Office Hours
+
+Footer (Global)
+├─ Brand Logo
+├─ Quick Links
+│  ├─ Services
+│  ├─ Case Studies
+│  ├─ Blog
+│  ├─ About
+│  └─ Contact
+├─ Legal Links
+│  ├─ Privacy Policy → /privacy
+│  └─ Terms of Service → /terms
+├─ Social Media Icons
+└─ Copyright Notice
+
+Utility Pages
+├─ Privacy Policy (/privacy)
+├─ Terms of Service (/terms)
+└─ 404 Error Page (/404)
+
+CMS Admin (/admin)
+└─ Decap CMS Interface (Netlify Identity protected)
+
+
+DATA FLOW DIAGRAM
+=================
+
+User Interaction → Lead Capture
+│
+├─ Option 1: Contact Form
+│  └─ Form Submit → Netlify Function (/netlify/functions/lead.js)
+│     └─ Validation (email format, message length, honeypot check)
+│        └─ Zapier Webhook
+│           └─ HubSpot (Create/Update Contact + Optional Deal)
+│
+├─ Option 2: Calendly Widget
+│  └─ Direct booking (Calendly handles data)
+│     └─ Calendly → Your Calendar + HubSpot (via Calendly integration)
+│
+└─ Tracking (Parallel)
+   ├─ GA4 Events (page views, CTA clicks, form submits)
+   └─ HubSpot Tracking (session data, page flows)
+
+
+CONTENT MANAGEMENT FLOW
+========================
+
+Content Editor (Client)
+└─ Logs into /admin (Netlify Identity)
+   └─ Decap CMS Interface
+      ├─ Collections
+      │  ├─ Services (src/content/services/)
+      │  ├─ Locations (src/content/locations/)
+      │  ├─ Case Studies (src/content/case-studies/)
+      │  ├─ Blog Posts (src/content/blog/)
+      │  └─ Settings (src/content/settings/site.json)
+      │
+      └─ Editorial Actions
+         ├─ Create New Entry → Git commit to branch
+         ├─ Edit Entry → Git commit
+         └─ Publish → Merge to main
+            └─ Trigger Netlify Build
+               └─ Astro Build Process
+                  ├─ Generate Static HTML
+                  ├─ Optimize Images
+                  ├─ Create Sitemap
+                  └─ Deploy to CDN
+
+
+SEO + SCHEMA IMPLEMENTATION
+============================
+
+Every Page:
+├─ <meta> tags (title, description)
+├─ Open Graph tags (og:title, og:description, og:image)
+├─ Twitter Card tags
+└─ Canonical URL
+
+Homepage:
+└─ JSON-LD: Organization
+   ├─ name
+   ├─ url
+   ├─ logo
+   ├─ sameAs (social links)
+   └─ contactPoint
+
+Service Pages:
+└─ JSON-LD: Service + FAQPage
+   ├─ Service: name, description, provider, areaServed
+   └─ FAQPage: mainEntity (array of Questions/Answers)
+
+Location Pages:
+└─ JSON-LD: LocalBusiness
+   ├─ name, address (or areaServed if no physical location)
+   ├─ geo coordinates (if applicable)
+   └─ openingHours (if applicable)
+
+Case Study Pages:
+└─ JSON-LD: Article (optional)
+   └─ headline, author, datePublished
+
+
+RESPONSIVE BREAKPOINTS
+=======================
+
+Mobile First Approach:
+├─ Base (< 640px): Single column, stacked navigation
+├─ SM (640px+): Improved spacing, 2-col grids where appropriate
+├─ MD (768px+): Tablet optimizations, side-by-side forms
+├─ LG (1024px+): Desktop nav, 3-col grids, hero layouts
+└─ XL (1280px+): Max-width containers, enhanced spacing
+
+
+PERFORMANCE BUDGET TARGETS
+===========================
+
+Lighthouse Scores (Mobile):
+├─ Performance: ≥ 90
+├─ Accessibility: ≥ 90
+├─ Best Practices: ≥ 90
+└─ SEO: 100
+
+Page Speed:
+├─ First Contentful Paint: < 1.8s
+├─ Largest Contentful Paint: < 2.5s
+├─ Total Blocking Time: < 200ms
+└─ Cumulative Layout Shift: < 0.1
+
+Asset Budgets:
+├─ HTML: < 50KB per page
+├─ CSS: < 100KB total
+├─ JS: < 200KB total (initial)
+├─ Images: WebP format, lazy loaded, < 200KB each
+└─ Fonts: WOFF2, 2 weights max per family
