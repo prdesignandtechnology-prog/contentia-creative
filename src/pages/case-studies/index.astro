@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import site from "../../content/settings/site.json";
+import { getCollection } from "astro:content";
+
+const caseStudies = await getCollection("caseStudies");
+---
+<BaseLayout title={`Case Studies | ${site.brand_name}`} description="Client outcomes and success stories.">
+  <section class="py-16">
+    <div class="container">
+      <p class="section-kicker">Case Studies</p>
+      <h1 class="section-title mt-2">Proof that the strategy works.</h1>
+      <div class="mt-8 grid gap-6 md:grid-cols-3">
+        {caseStudies.map((study) => (
+          <article class="rounded-2xl border border-slate-200 bg-white p-6" key={study.slug}>
+            <h2 class="font-display text-lg">{study.data.title}</h2>
+            <p class="mt-2 text-sm text-slate-600">{study.data.summary}</p>
+            <a class="mt-4 inline-flex text-sm font-semibold text-cc-teal" href={`/case-studies/${study.slug}`}>
+              View case study →
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

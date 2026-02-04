@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../content/settings/site.json";
+---
+<BaseLayout title={`Privacy Policy | ${site.brand_name}`} description="Privacy policy for site visitors.">
+  <section class="py-16">
+    <div class="container max-w-3xl">
+      <h1 class="section-title">Privacy Policy</h1>
+      <p class="mt-4 text-sm text-slate-600">
+        We respect your privacy. We only collect information you submit through our forms or scheduling
+        tools. Analytics and tracking platforms (GA4, HubSpot, and Microsoft Clarity) may collect usage
+        data to improve our services.
+      </p>
+      <p class="mt-4 text-sm text-slate-600">
+        If you have questions, contact us at {site.email}.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

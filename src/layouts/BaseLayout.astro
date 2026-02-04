@@ -1,0 +1,71 @@
+---
+import "../styles/global.css";
+import site from "../content/settings/site.json";
+const { title = site.brand_name, description = site.tagline } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical.toString()} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Instrument+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical.toString()} />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body class="min-h-screen">
+    <header class="border-b border-slate-200 bg-white/80 backdrop-blur">
+      <div class="container flex items-center justify-between py-4">
+        <a href="/" class="flex items-center gap-2 font-display text-xl">
+          <span class="text-cc-teal">●</span>
+          {site.brand_name}
+        </a>
+        <nav class="hidden items-center gap-6 text-sm font-semibold text-slate-700 md:flex">
+          <a href="/services">Services</a>
+          <a href="/case-studies">Case Studies</a>
+          <a href="/about">About</a>
+          <a href="/contact" class="rounded-full bg-cc-teal px-4 py-2 text-white">{site.cta_label}</a>
+        </nav>
+      </div>
+    </header>
+    <main>{Astro.children}</main>
+    <footer class="border-t border-slate-200 bg-slate-50">
+      <div class="container grid gap-8 py-12 md:grid-cols-3">
+        <div>
+          <p class="font-display text-lg">{site.brand_name}</p>
+          <p class="mt-2 text-sm text-slate-600">{site.tagline}</p>
+        </div>
+        <div class="text-sm text-slate-600">
+          <p class="font-semibold text-slate-700">Contact</p>
+          <p>{site.phone}</p>
+          <p>{site.email}</p>
+          <p>{site.service_area}</p>
+        </div>
+        <div class="text-sm text-slate-600">
+          <p class="font-semibold text-slate-700">Quick Links</p>
+          <ul class="mt-2 space-y-1">
+            <li><a href="/services">Services</a></li>
+            <li><a href="/case-studies">Case Studies</a></li>
+            <li><a href="/blog">Insights</a></li>
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/terms">Terms</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+        © {new Date().getFullYear()} {site.brand_name}. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import site from "../content/settings/site.json";
+---
+<BaseLayout title={`Terms of Service | ${site.brand_name}`} description="Terms of service.">
+  <section class="py-16">
+    <div class="container max-w-3xl">
+      <h1 class="section-title">Terms of Service</h1>
+      <p class="mt-4 text-sm text-slate-600">
+        Services are provided on a project or retainer basis. Scope, deliverables, and timelines are
+        documented in a signed agreement. Payments are due according to the invoice schedule.
+      </p>
+      <p class="mt-4 text-sm text-slate-600">
+        For questions, reach out to {site.email}.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

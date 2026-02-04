@@ -1,0 +1,80 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "services"
+    label: "Services"
+    folder: "src/content/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Summary", name: "summary", widget: "string" }
+      - { label: "Hero", name: "hero", widget: "string" }
+      - { label: "Outcome", name: "outcome", widget: "string" }
+      - label: "Deliverables"
+        name: "deliverables"
+        widget: "list"
+      - label: "Process"
+        name: "process"
+        widget: "list"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
+      - label: "FAQs"
+        name: "faqs"
+        widget: "list"
+        fields:
+          - { label: "Question", name: "question", widget: "string" }
+          - { label: "Answer", name: "answer", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "case-studies"
+    label: "Case Studies"
+    folder: "src/content/case-studies"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Client", name: "client", widget: "string" }
+      - { label: "Industry", name: "industry", widget: "string" }
+      - { label: "Summary", name: "summary", widget: "string" }
+      - label: "Results"
+        name: "results"
+        widget: "list"
+      - label: "Tools"
+        name: "tools"
+        widget: "list"
+        required: false
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Publish Date", name: "publishDate", widget: "datetime" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "settings"
+    label: "Settings"
+    files:
+      - label: "Site Settings"
+        name: "site"
+        file: "src/content/settings/site.json"
+        fields:
+          - { label: "Brand Name", name: "brand_name", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "CTA Label", name: "cta_label", widget: "string" }
+          - { label: "Calendly URL", name: "calendly_url", widget: "string" }
+          - { label: "Service Area", name: "service_area", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Address", name: "address", widget: "string" }
