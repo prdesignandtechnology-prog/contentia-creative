@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import site from "../../content/settings/site.json";
+import { getCollection, getEntryBySlug } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({ params: { slug: post.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = await getEntryBySlug("blog", slug);
+if (!post) throw new Error("Post not found");
+const { data } = post;
+const { Content } = await post.render();
+---
+<BaseLayout title={`${data.title} | ${site.brand_name}`} description={data.description}>
+  <section class="py-16">
+    <div class="container max-w-3xl">
+      <p class="section-kicker">Article</p>
+      <h1 class="section-title mt-2">{data.title}</h1>
+      <p class="mt-2 text-sm text-slate-500">Published {data.publishDate}</p>
+      <article class="prose prose-slate mt-6 max-w-none">
+        <Content />
+      </article>
+    </div>
+  </section>
+</BaseLayout>

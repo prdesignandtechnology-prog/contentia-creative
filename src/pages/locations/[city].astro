@@ -1,0 +1,59 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CTA from "../../components/CTA.astro";
+import SchemaLocalBusiness from "../../components/SchemaLocalBusiness.astro";
+import site from "../../content/settings/site.json";
+import { getCollection, getEntryBySlug } from "astro:content";
+
+export async function getStaticPaths() {
+  const locations = await getCollection("locations");
+  return locations.map((location) => ({ params: { city: location.slug } }));
+}
+
+const { city } = Astro.params;
+const location = await getEntryBySlug("locations", city);
+if (!location) throw new Error("Location not found");
+const { data } = location;
+const { Content } = await location.render();
+---
+<BaseLayout title={`${data.title} | ${site.brand_name}`} description={data.summary}>
+  <SchemaLocalBusiness city={data.city} />
+  <section class="bg-gradient-to-br from-white to-cc-purple/20 py-16">
+    <div class="container">
+      <p class="section-kicker">Location</p>
+      <h1 class="section-title mt-2">{data.title}</h1>
+      <p class="mt-4 max-w-2xl text-slate-600">{data.hero}</p>
+      <div class="mt-6">
+        <CTA href={site.calendly_url} label={site.cta_label} />
+      </div>
+    </div>
+  </section>
+  <section class="py-16">
+    <div class="container grid gap-8 md:grid-cols-2">
+      <div class="prose prose-slate max-w-none">
+        <Content />
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6">
+        <p class="text-sm font-semibold text-slate-700">Services available</p>
+        <ul class="mt-4 list-disc space-y-2 pl-4 text-sm text-slate-600">
+          {data.services.map((service) => (
+            <li>{service}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+  <section class="bg-slate-50 py-16">
+    <div class="container">
+      <p class="section-kicker">FAQs</p>
+      <div class="mt-6 grid gap-6 md:grid-cols-3">
+        {data.faqs.map((faq) => (
+          <div class="rounded-2xl border border-slate-200 bg-white p-5" key={faq.question}>
+            <h3 class="font-semibold text-slate-800">{faq.question}</h3>
+            <p class="mt-2 text-sm text-slate-600">{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-white text-slate-900;
+}
+
+.container {
+  @apply mx-auto max-w-6xl px-6;
+}
+
+.section-title {
+  @apply font-display text-3xl text-slate-900 md:text-4xl;
+}
+
+.section-kicker {
+  @apply text-sm font-semibold uppercase tracking-widest text-cc-teal;
+}

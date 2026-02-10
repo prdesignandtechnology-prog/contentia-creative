@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import site from "../../content/settings/site.json";
+import { getCollection, getEntryBySlug } from "astro:content";
+
+export async function getStaticPaths() {
+  const caseStudies = await getCollection("caseStudies");
+  return caseStudies.map((study) => ({ params: { slug: study.slug } }));
+}
+
+const { slug } = Astro.params;
+const study = await getEntryBySlug("caseStudies", slug);
+if (!study) throw new Error("Case study not found");
+const { data } = study;
+const { Content } = await study.render();
+---
+<BaseLayout title={`${data.title} | ${site.brand_name}`} description={data.summary}>
+  <section class="bg-slate-50 py-16">
+    <div class="container">
+      <p class="section-kicker">Case Study</p>
+      <h1 class="section-title mt-2">{data.title}</h1>
+      <p class="mt-4 text-slate-600">Client: {data.client} · {data.industry}</p>
+      <div class="prose prose-slate mt-6 max-w-3xl">
+        <Content />
+      </div>
+    </div>
+  </section>
+  <section class="py-16">
+    <div class="container grid gap-8 md:grid-cols-2">
+      <div class="rounded-2xl border border-slate-200 bg-white p-6">
+        <h2 class="font-display text-lg">Results</h2>
+        <ul class="mt-4 list-disc space-y-2 pl-4 text-sm text-slate-600">
+          {data.results.map((result) => (
+            <li>{result}</li>
+          ))}
+        </ul>
+      </div>
+      <div class="rounded-2xl border border-slate-200 bg-white p-6">
+        <h2 class="font-display text-lg">Tools Used</h2>
+        <ul class="mt-4 list-disc space-y-2 pl-4 text-sm text-slate-600">
+          {(data.tools || []).map((tool) => (
+            <li>{tool}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

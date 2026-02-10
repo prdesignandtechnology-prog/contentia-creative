@@ -1,0 +1,13 @@
+---
+import site from "../content/settings/site.json";
+const data = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: site.brand_name,
+  url: "https://contentia-creative.netlify.app",
+  email: site.email,
+  telephone: site.phone,
+  areaServed: site.service_area
+};
+---
+<script type="application/ld+json" set:html={JSON.stringify(data)}></script>
